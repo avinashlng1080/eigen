@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type MyProfileEditFormModal_me = {
     readonly name: string | null;
+    readonly profession: string | null;
     readonly bio: string | null;
     readonly icon: {
         readonly url: string | null;
@@ -31,6 +32,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "profession",
       "storageKey": null
     },
     {
@@ -68,5 +76,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '2a2999c02d81e82b1ab351a36d90b806';
+(node as any).hash = 'ee9b0e9d7f21cc742a9191d27075f3f6';
 export default node;

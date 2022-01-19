@@ -27,6 +27,9 @@ interface MyProfileEditFormModalProps {
 export interface EditMyProfileValuesSchema {
   photo: string
   name: string
+  // TODO: Location
+  profession: string
+  otherRelevantPosition: string
   bio: string
 }
 
@@ -58,11 +61,11 @@ export const MyProfileEditFormModal: React.FC<MyProfileEditFormModalProps> = (pr
     }
   }
 
-  const updateUserInfo = async ({ name, bio }: { name: string; bio: string }) => {
+  const updateUserInfo = async (updatedValues: Partial<EditMyProfileValuesSchema>) => {
     try {
-      await updateMyUserProfile({ name, bio })
+      await updateMyUserProfile(updatedValues)
     } catch (error) {
-      console.error("Failed to update user name and bio ", error)
+      console.error(`Failed to update ${Object.keys(updatedValues)}`, error)
     }
   }
 
@@ -72,15 +75,18 @@ export const MyProfileEditFormModal: React.FC<MyProfileEditFormModalProps> = (pr
     validateOnBlur: true,
     initialValues: {
       name: me?.name ?? "",
+      // TODO: Location
+      profession: me?.profession ?? "",
+      otherRelevantPosition: me?.otherRelevantPosition ?? "",
       bio: me?.bio ?? "",
       photo: me?.icon?.url ?? props.localImage?.path ?? "",
     },
     initialErrors: {},
-    onSubmit: async ({ name, bio, photo }) => {
+    onSubmit: async ({ photo, ...otherValues }) => {
       try {
         setLoading(true)
         await Promise.all(
-          compact([await updateUserInfo({ name, bio }), didUpdatePhoto && (await uploadProfilePhoto(photo))])
+          compact([await updateUserInfo(otherValues), didUpdatePhoto && (await uploadProfilePhoto(photo))])
         )
       } catch (error) {
         console.error("Failed to update user profile ", error)
@@ -145,32 +151,60 @@ export const MyProfileEditFormModal: React.FC<MyProfileEditFormModalProps> = (pr
             </Touchable>
           </Flex>
           <Flex mx={2}>
-            <Input
-              ref={nameInputRef}
-              title="Name"
-              required
-              onChangeText={handleChange("name") as (value: string) => void}
-              onBlur={() => validateForm()}
-              error={errors.name}
-              returnKeyType="next"
-              defaultValue={values.name}
-            />
-            <Spacer py={2} />
-            <Input
-              ref={bioInputRef}
-              title="About"
-              onChangeText={handleChange("bio") as (value: string) => void}
-              onBlur={() => validateForm()}
-              error={errors.bio}
-              maxLength={150}
-              multiline
-              showLimit
-              defaultValue={values.bio}
-            />
-            <Spacer py={2} />
-            <Button flex={1} disabled={!dirty} onPress={handleSubmit}>
-              Save
-            </Button>
+            <Join separator={<Spacer py={2} />}>
+              <Input
+                ref={nameInputRef}
+                title="Full Name"
+                onChangeText={handleChange("name")}
+                onBlur={() => validateForm()}
+                error={errors.name}
+                returnKeyType="next"
+                defaultValue={values.name}
+              />
+
+              {/* TODO: Primary Location */}
+
+              <Input
+                ref={nameInputRef}
+                title="Profession"
+                onChangeText={handleChange("profession")}
+                onBlur={() => validateForm()}
+                error={errors.name}
+                returnKeyType="next"
+                defaultValue={values.profession}
+                placeholder="Select Your Profession"
+              />
+
+              {/* TODO: Other other relevant position */}
+
+              {/* <Input
+                ref={nameInputRef}
+                title="Other Relevant Position"
+                onChangeText={handleChange("otherRelevantPosition")}
+                onBlur={() => validateForm()}
+                error={errors.name}
+                returnKeyType="next"
+                defaultValue={values.otherRelevantPosition}
+                placeholder="Institution Name and Position"
+              /> */}
+
+              <Input
+                ref={bioInputRef}
+                title="About"
+                onChangeText={handleChange("bio")}
+                onBlur={() => validateForm()}
+                error={errors.bio}
+                maxLength={150}
+                multiline
+                showLimit
+                defaultValue={values.bio}
+                placeholder="You can add a short bio to tell more about yourself and your collection. It can be anything like the artists you collect, the genres you're interested in , etc."
+              />
+
+              <Button flex={1} disabled={!dirty} onPress={handleSubmit}>
+                Save
+              </Button>
+            </Join>
           </Flex>
         </Join>
       </ScrollView>
@@ -179,10 +213,13 @@ export const MyProfileEditFormModal: React.FC<MyProfileEditFormModalProps> = (pr
   )
 }
 
+// TODO: location
 export const MyProfileEditFormModalFragmentContainer = createFragmentContainer(MyProfileEditFormModal, {
   me: graphql`
     fragment MyProfileEditFormModal_me on Me {
       name
+      profession
+      otherRelevantPosition
       bio
       icon {
         url(version: "thumbnail")

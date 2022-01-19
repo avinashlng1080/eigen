@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
-/* @relayHash 3fbdf4898d34f038e5b8c560728a5443 */
+/* @relayHash cb4031947052ee57098d6df65aab531f */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -38,6 +38,7 @@ fragment MyCollectionAndSavedWorks_me on Me {
 
 fragment MyProfileEditFormModal_me on Me {
   name
+  profession
   bio
   icon {
     url(version: "thumbnail")
@@ -142,6 +143,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "profession",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -151,7 +159,7 @@ return {
     ]
   },
   "params": {
-    "id": "3fbdf4898d34f038e5b8c560728a5443",
+    "id": "cb4031947052ee57098d6df65aab531f",
     "metadata": {
       "relayTestingSelectionTypeInfo": {
         "me": {
@@ -175,7 +183,8 @@ return {
           "plural": false,
           "type": "ID"
         },
-        "me.name": (v0/*: any*/)
+        "me.name": (v0/*: any*/),
+        "me.profession": (v0/*: any*/)
       }
     },
     "name": "MyCollectionAndSavedWorksTestsQuery",

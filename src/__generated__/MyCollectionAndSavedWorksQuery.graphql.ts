@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
-/* @relayHash 0b7a60c41163ceed3735a692cbc77fef */
+/* @relayHash f54b825d6c19def639d3ddc543b7c27b */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -38,6 +38,7 @@ fragment MyCollectionAndSavedWorks_me on Me {
 
 fragment MyProfileEditFormModal_me on Me {
   name
+  profession
   bio
   icon {
     url(version: "thumbnail")
@@ -135,6 +136,13 @@ const node: ConcreteRequest = {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "profession",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -144,7 +152,7 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "id": "0b7a60c41163ceed3735a692cbc77fef",
+    "id": "f54b825d6c19def639d3ddc543b7c27b",
     "metadata": {},
     "name": "MyCollectionAndSavedWorksQuery",
     "operationKind": "query",
