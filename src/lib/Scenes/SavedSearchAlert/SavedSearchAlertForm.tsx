@@ -61,7 +61,7 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = (props)
   const tracking = useTracking()
   const { space } = useTheme()
   const [visibleDeleteDialog, setVisibleDeleteDialog] = useState(false)
-  const [shouldShowEmailWarning, setShouldShowEmailWarning] = useState(!userAllowsEmails)
+  const [shouldShowEmailSubscriptionWarning, setShouldShowEmailSubscriptionWarning] = useState(!userAllowsEmails)
   const formik = useFormik<SavedSearchAlertFormValues>({
     initialValues,
     initialErrors: {},
@@ -126,7 +126,7 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = (props)
   }, [initialValues.email])
 
   useEffect(() => {
-    setShouldShowEmailWarning(!userAllowsEmails)
+    setShouldShowEmailSubscriptionWarning(!userAllowsEmails)
   }, [userAllowsEmails])
 
   const handleTogglePushNotification = async (enabled: boolean) => {
@@ -144,7 +144,7 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = (props)
 
   const handleToggleEmailNotification = (enabled: boolean) => {
     // Show the modal only when the user is opted out of email and changes the "email alerts" toggle from off to on state
-    if (shouldShowEmailWarning && !initialValues.email && enabled) {
+    if (shouldShowEmailSubscriptionWarning && !initialValues.email && enabled) {
       const title = "Artsy would like to send you email notifications"
       const description = `After clicking ${quoteLeft}Save Alert${quoteRight}, you are opting in to receive alert notifications via email. You can update your email preferences by clicking into any alert listed in your profile tab and clicking ${quoteLeft}Update email preferences${quoteRight} underneath the ${quoteLeft}Email Alerts${quoteRight} toggle`
 
@@ -153,7 +153,7 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = (props)
         {
           text: "Accept",
           onPress: () => {
-            setShouldShowEmailWarning(false)
+            setShouldShowEmailSubscriptionWarning(false)
             formik.setFieldValue("email", enabled)
           },
         },
@@ -185,6 +185,8 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = (props)
     })
   }
 
+  const shouldShowEmailWarning = !!savedSearchAlertId && !!initialValues.email && !userAllowsEmails
+
   return (
     <FormikProvider value={formik}>
       <ScrollView
@@ -203,6 +205,7 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = (props)
           onTogglePushNotification={handleTogglePushNotification}
           onToggleEmailNotification={handleToggleEmailNotification}
           onRemovePill={handleRemovePill}
+          shouldShowEmailWarning={shouldShowEmailWarning}
           {...other}
         />
       </ScrollView>

@@ -33,10 +33,10 @@ describe("EditSavedSearchAlert", () => {
 
     mockEnvironmentPayload(mockEnvironment, {
       SearchCriteria: () => searchCriteria,
-      Me: () => meMocked,
     })
     mockEnvironmentPayload(mockEnvironment, {
       FilterArtworksConnection: () => filterArtworks,
+      Me: () => meMocked,
     })
 
     expect(getAllByTestId("alert-pill").map(extractText)).toEqual(["Lithograph", "Paper"])
@@ -48,10 +48,10 @@ describe("EditSavedSearchAlert", () => {
 
     mockEnvironmentPayload(mockEnvironment, {
       SearchCriteria: () => searchCriteria,
-      Me: () => meMocked,
     })
     mockEnvironmentPayload(mockEnvironment, {
       FilterArtworksConnection: () => filterArtworks,
+      Me: () => meMocked,
     })
 
     fireEvent.changeText(getByTestId("alert-input-name"), "something new")
@@ -76,13 +76,13 @@ describe("EditSavedSearchAlert", () => {
 
     mockEnvironmentPayload(mockEnvironment, {
       SearchCriteria: () => searchCriteria,
-      Me: () => meMocked,
     })
     mockEnvironmentPayload(mockEnvironment, {
       Artist: () => ({
         internalID: "artistID",
       }),
       FilterArtworksConnection: () => filterArtworks,
+      Me: () => meMocked,
     })
 
     fireEvent.press(getByTestId("view-artworks-button"))
@@ -99,10 +99,10 @@ describe("EditSavedSearchAlert", () => {
 
     mockEnvironmentPayload(mockEnvironment, {
       SearchCriteria: () => searchCriteria,
-      Me: () => meMocked,
     })
     mockEnvironmentPayload(mockEnvironment, {
       FilterArtworksConnection: () => filterArtworks,
+      Me: () => meMocked,
     })
 
     expect(getAllByA11yState({ selected: true })).toHaveLength(2)
@@ -120,10 +120,10 @@ describe("EditSavedSearchAlert", () => {
           push: false,
         },
       }),
-      Me: () => meMocked,
     })
     mockEnvironmentPayload(mockEnvironment, {
       FilterArtworksConnection: () => filterArtworks,
+      Me: () => meMocked,
     })
 
     expect(getAllByA11yState({ selected: false })).toHaveLength(2)
@@ -140,10 +140,10 @@ describe("EditSavedSearchAlert", () => {
           push: false,
         },
       }),
-      Me: () => meMocked,
     })
     mockEnvironmentPayload(mockEnvironment, {
       FilterArtworksConnection: () => filterArtworks,
+      Me: () => meMocked,
     })
 
     expect(getAllByA11yState({ selected: false })).toHaveLength(1)
@@ -160,10 +160,10 @@ describe("EditSavedSearchAlert", () => {
           email: false,
         },
       }),
-      Me: () => meMocked,
     })
     mockEnvironmentPayload(mockEnvironment, {
       FilterArtworksConnection: () => filterArtworks,
+      Me: () => meMocked,
     })
 
     expect(getAllByA11yState({ selected: false })).toHaveLength(1)
